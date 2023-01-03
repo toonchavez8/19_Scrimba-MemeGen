@@ -2,6 +2,8 @@
 
 Welcome to the Meme Generator app! This app allows you to create and share memes with your friends. It was built using the React JavaScript library and the Imgflip API.
 
+![meme gen design](./public/Meme%20Generator.png)
+
 ## Features
 
 - Responsive design using grid and flex
