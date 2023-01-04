@@ -1,7 +1,11 @@
 main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding: 2.25rem;
 }
 .form {
+	width: 100%;
 	display: grid;
 	grid-template: 2.5rem 2.5rem / 1fr 1fr;
 	grid-gap: 1rem;
@@ -34,4 +38,13 @@ main {
 	border-radius: 0.3125rem;
 	border: 0.0625rem solid rgba(213, 212, 216, 1);
 	text-indent: 5px;
+}
+
+.memeContainer {
+	width: 100%;
+}
+
+.memeContainer img {
+	border-radius: 5px;
+	width: 100%;
 }
