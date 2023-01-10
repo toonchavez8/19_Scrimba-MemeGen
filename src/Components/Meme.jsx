@@ -1,10 +1,7 @@
 import React from 'react'
 import "../CSS/Meme.css"
-import memesData from '../api/memesData'
 
 export default function Meme() {
-
-    // const [memeUrl, setMemeUrl] = React.useState("http://i.imgflip.com/1bij.jpg")
     
     const [meme, setMeme] = React.useState({
         topText: "",
@@ -12,11 +9,20 @@ export default function Meme() {
         randomImg: "http://i.imgflip.com/1bij.jpg",
     })
 
-    const [allMemeImgs, setAllMemeImgs] = React.useState(memesData)
+    const [getMemes, setGetMemes] = React.useState([])
+
+    React.useEffect(() => {
+        const getMemesData = async () => {
+            const response = await fetch("https://api.imgflip.com/get_memes")
+            const data = await response.json()
+            setGetMemes(data.data.memes)
+        }
+        getMemesData()
+    }, [])
 
     
     function getMemeImg(){
-        const memesArray = allMemeImgs.data.memes
+        const memesArray = getMemes
         const randomNumber = Math.floor(Math.random() * memesArray.length)
        const url = memesArray[randomNumber].url
          setMeme(prevMeme => ({
@@ -25,11 +31,34 @@ export default function Meme() {
          }))
     }
 
+    function handleChange(event){
+        const {name, value} = event.target
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            [name]: value
+        }))
+    }
+
+
     return (
         <main>
             <div className='form' >
-                <input className='form--input' type="text" placeholder="Top Text" />
-                <input className='form--input' type="text" placeholder="Bottom Text" />
+                <input 
+                name="topText"
+                value={meme.topText}
+                onChange={handleChange}
+                className='form--input' 
+                type="text" 
+                placeholder="Top Text"
+                 />
+                <input 
+                name="bottomText"
+                value={meme.bottomText}
+                onChange={handleChange}
+                className='form--input' 
+                type="text" 
+                placeholder="Bottom Text" 
+                />
                 <button className='form--button' 
                 onClick={getMemeImg}
                 >Get a Meme 
@@ -38,8 +67,13 @@ export default function Meme() {
             </div>
             <figure className='memeContainer'>
                 <img src={meme.randomImg} alt="meme"/>
+                <h2 className="meme--text top">{meme.topText}</h2>
+                <h2 className="meme--text bottom">{meme.bottomText}</h2>
             </figure>
-
         </main>
     )
 }
+
+
+
+
